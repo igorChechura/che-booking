@@ -16,6 +16,16 @@ class CheBooking
 		add_action('init', array($this, 'custom_post_type'));
 	}
 
+	static function activation()
+	{
+		flush_rewrite_rules();
+	}
+
+	static function deactivation()
+	{
+		flush_rewrite_rules();
+	}
+
 	function custom_post_type()
 	{
 		register_post_type('room', [
@@ -27,5 +37,8 @@ class CheBooking
 }
 
 if (class_exists('CheBooking')) {
-	new CheBooking();
+	$cheBooking = new CheBooking();
 }
+
+register_activation_hook(__FILE__, array($cheBooking, 'activation'));
+register_deactivation_hook(__FILE__, array($cheBooking, 'deactivation'));
