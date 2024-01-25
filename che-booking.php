@@ -11,9 +11,16 @@ if (!function_exists('add_action')) {
 
 class CheBooking
 {
-	function __construct()
+	public function register()
 	{
+		// register post type
 		add_action('init', array($this, 'custom_post_type'));
+
+		// enqueue admin
+		add_action('admin_enqueue_scripts', array($this, 'enqueue_admin'));
+
+		// enqueue admin
+		add_action('wp_enqueue_scripts', array($this, 'enqueue_front'));
 	}
 
 	static function activation()
@@ -26,7 +33,19 @@ class CheBooking
 		flush_rewrite_rules();
 	}
 
-	function custom_post_type()
+	public function enqueue_admin()
+	{
+		wp_enqueue_style('cheBookingStyle', plugins_url('/assets/admin/styles.css', __FILE__));
+		wp_enqueue_script('cheBookingScript', plugins_url('/assets/admin/scripts.js', __FILE__));
+	}
+
+	public function enqueue_front()
+	{
+		wp_enqueue_style('cheBookingStyle', plugins_url('/assets/front/styles.css', __FILE__));
+		wp_enqueue_script('cheBookingScript', plugins_url('/assets/front/scripts.js', __FILE__));
+	}
+
+	public function custom_post_type()
 	{
 		register_post_type('room', [
 			'public' => true,
@@ -38,6 +57,7 @@ class CheBooking
 
 if (class_exists('CheBooking')) {
 	$cheBooking = new CheBooking();
+	$cheBooking->register();
 }
 
 register_activation_hook(__FILE__, array($cheBooking, 'activation'));
