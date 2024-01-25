@@ -49,6 +49,10 @@ class CheBooking
 	{
 		register_post_type('room', [
 			'public' => true,
+			'has_archive' => true,
+			'rewrite' => [
+				'slug' => 'rooms'
+			],
 			'label' => esc_html__('Rooms', 'chebooking'),
 			'supports' => ['title', 'editor', 'thumbnail'],
 		]);
