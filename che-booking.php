@@ -24,6 +24,9 @@ class CheBooking
 
 		// load template
 		add_filter('template_include', [$this, 'room_template']);
+
+		// admin menu
+		add_action('admin_menu', [$this, 'add_admin_menu']);
 	}
 
 	static function activation()
@@ -34,6 +37,18 @@ class CheBooking
 	static function deactivation()
 	{
 		flush_rewrite_rules();
+	}
+
+	public function add_admin_menu() {
+		add_menu_page(
+			esc_html__('CheBooking Settings', 'chebooking'),
+			esc_html__('CheBooking', 'chebooking'),
+			'manage_options',
+			'chebooking',
+			'',
+			'dashicons-admin-multisite',
+			10
+		);
 	}
 
 	public function room_template($template) {
