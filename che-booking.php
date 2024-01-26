@@ -14,13 +14,16 @@ class CheBooking
 	public function register()
 	{
 		// register post type
-		add_action('init', array($this, 'custom_post_type'));
+		add_action('init', [$this, 'custom_post_type']);
 
 		// enqueue admin
-		add_action('admin_enqueue_scripts', array($this, 'enqueue_admin'));
+		add_action('admin_enqueue_scripts', [$this, 'enqueue_admin']);
 
-		// enqueue admin
-		add_action('wp_enqueue_scripts', array($this, 'enqueue_front'));
+		// enqueue front
+		add_action('wp_enqueue_scripts', [$this, 'enqueue_front']);
+
+		// load template
+		add_filter('template_include', [$this, 'room_template']);
 	}
 
 	static function activation()
@@ -31,6 +34,19 @@ class CheBooking
 	static function deactivation()
 	{
 		flush_rewrite_rules();
+	}
+
+	public function room_template($template) {
+		if(is_post_type_archive('room')) {
+			$theme_files = ['archive-room.php', 'che-booking/archive.php'];
+			$exist_in_theme = locate_template($theme_files, false);
+			if($exist_in_theme !== '') {
+				return $exist_in_theme;
+			} else {
+				return plugin_dir_path(__FILE__) . 'templates/archive-room.php';
+			}
+		}
+		return $template;
 	}
 
 	public function enqueue_admin()
