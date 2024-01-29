@@ -45,10 +45,14 @@ class CheBooking
 			esc_html__('CheBooking', 'chebooking'),
 			'manage_options',
 			'chebooking',
-			'',
+			[$this, 'admin_page'],
 			'dashicons-admin-multisite',
 			10
 		);
+	}
+
+	public function admin_page() {
+		require_once plugin_dir_path(__FILE__) . 'admin/admin.php';
 	}
 
 	public function room_template($template) {
