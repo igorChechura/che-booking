@@ -27,6 +27,9 @@ class CheBooking
 
 		// admin menu
 		add_action('admin_menu', [$this, 'add_admin_menu']);
+
+		// add links to pugin page
+		add_filter('plugin_action_links_' . plugin_basename(__FILE__), [$this, 'add_plugin_setting_link']);
 	}
 
 	static function activation()
@@ -39,7 +42,15 @@ class CheBooking
 		flush_rewrite_rules();
 	}
 
-	public function add_admin_menu() {
+	public function add_plugin_setting_link($links)
+	{
+		$custom_link = '<a href="admin.php?page=chebooking">' . esc_html__('Settings', 'chebooking') . '</a>';
+		array_push($links, $custom_link);
+		return $links;
+	}
+
+	public function add_admin_menu()
+	{
 		add_menu_page(
 			esc_html__('CheBooking Settings', 'chebooking'),
 			esc_html__('CheBooking', 'chebooking'),
@@ -47,19 +58,21 @@ class CheBooking
 			'chebooking',
 			[$this, 'admin_page'],
 			'dashicons-admin-multisite',
-			10
+			100
 		);
 	}
 
-	public function admin_page() {
+	public function admin_page()
+	{
 		require_once plugin_dir_path(__FILE__) . 'admin/admin.php';
 	}
 
-	public function room_template($template) {
-		if(is_post_type_archive('room')) {
+	public function room_template($template)
+	{
+		if (is_post_type_archive('room')) {
 			$theme_files = ['archive-room.php', 'che-booking/archive-room.php'];
 			$exist_in_theme = locate_template($theme_files, false);
-			if($exist_in_theme !== '') {
+			if ($exist_in_theme !== '') {
 				return $exist_in_theme;
 			} else {
 				return plugin_dir_path(__FILE__) . 'templates/archive-room.php';
