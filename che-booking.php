@@ -53,7 +53,7 @@ class CheBooking
 
 	public function room_template($template) {
 		if(is_post_type_archive('room')) {
-			$theme_files = ['archive-room.php', 'che-booking/archive.php'];
+			$theme_files = ['archive-room.php', 'che-booking/archive-room.php'];
 			$exist_in_theme = locate_template($theme_files, false);
 			if($exist_in_theme !== '') {
 				return $exist_in_theme;
