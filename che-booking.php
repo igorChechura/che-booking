@@ -81,6 +81,18 @@ class CheBooking
 		add_settings_field('posts_per_page', esc_html__('Posts per page', 'chebooking'), [$this, 'posts_per_page_html'], 'booking_settings', 'booking_settings_section');
 	}
 
+	public function settings_section_html()
+	{
+		echo esc_html__('Hello world', 'chebooking');
+	}
+
+	public function posts_per_page_html()
+	{
+		$options = get_option('booking_settings_options');
+
+		echo '<input type="text" name="booking_settings_options[posts_per_page]" value="' . isset($options['posts_per_page']) ? $options['posts_per_page'] : '' . '">';
+	}
+
 	// frontend
 	public function room_template($template)
 	{
