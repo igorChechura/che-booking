@@ -35,6 +35,7 @@ class CheBooking
 		add_action('admin_init', [$this, 'settings_init']);
 	}
 
+	// activation
 	static function activation()
 	{
 		flush_rewrite_rules();
@@ -45,6 +46,7 @@ class CheBooking
 		flush_rewrite_rules();
 	}
 
+	// plugin settings
 	public function add_plugin_setting_link($links)
 	{
 		$custom_link = '<a href="admin.php?page=chebooking">' . esc_html__('Settings', 'chebooking') . '</a>';
@@ -79,6 +81,7 @@ class CheBooking
 		add_settings_field('posts_per_page', esc_html__('Posts per page', 'chebooking'), [$this, 'posts_per_page_html'], 'booking_settings', 'booking_settings_section');
 	}
 
+	// frontend
 	public function room_template($template)
 	{
 		if (is_post_type_archive('room')) {
@@ -105,6 +108,7 @@ class CheBooking
 		wp_enqueue_script('cheBookingScript', plugins_url('/assets/front/scripts.js', __FILE__));
 	}
 
+	// post type
 	public function custom_post_type()
 	{
 		register_post_type('room', [
