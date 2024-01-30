@@ -30,6 +30,9 @@ class CheBooking
 
 		// add links to pugin page
 		add_filter('plugin_action_links_' . plugin_basename(__FILE__), [$this, 'add_plugin_setting_link']);
+
+		// init settings
+		add_action('admin_init', [$this, 'settings_init']);
 	}
 
 	static function activation()
@@ -65,6 +68,15 @@ class CheBooking
 	public function admin_page()
 	{
 		require_once plugin_dir_path(__FILE__) . 'admin/admin.php';
+	}
+
+	public function settings_init()
+	{
+		register_setting('booking_settings', 'booking_settings_options');
+
+		add_settings_section('booking_settings_section', esc_html__('Settings', 'chebooking'), [$this, 'settings_section_html'], 'chebooking');
+
+		add_settings_field('posts_per_page', esc_html__('Posts per page', 'chebooking'), [$this, 'posts_per_page_html'], 'booking_settings', 'booking_settings_section');
 	}
 
 	public function room_template($template)
