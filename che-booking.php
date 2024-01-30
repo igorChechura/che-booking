@@ -78,7 +78,7 @@ class CheBooking
 
 		add_settings_section('booking_settings_section', esc_html__('Settings', 'chebooking'), [$this, 'settings_section_html'], 'chebooking');
 
-		add_settings_field('posts_per_page', esc_html__('Posts per page', 'chebooking'), [$this, 'posts_per_page_html'], 'booking_settings', 'booking_settings_section');
+		add_settings_field('posts_per_page', esc_html__('Posts per page', 'chebooking'), [$this, 'posts_per_page_html'], 'chebooking', 'booking_settings_section');
 	}
 
 	public function settings_section_html()
@@ -90,7 +90,9 @@ class CheBooking
 	{
 		$options = get_option('booking_settings_options');
 
-		echo '<input type="text" name="booking_settings_options[posts_per_page]" value="' . isset($options['posts_per_page']) ? $options['posts_per_page'] : '' . '">';
+		$value = isset($options['posts_per_page']) ? $options['posts_per_page'] : '';
+
+		echo '<input type="text" name="booking_settings_options[posts_per_page]" value="' . $value . '">';
 	}
 
 	// frontend
