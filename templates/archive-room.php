@@ -1,6 +1,11 @@
-<?php get_header(); ?>
+<?php
+get_header();
+$options = get_option('booking_settings_options');
+?>
 
 <div class="wrapper">
+
+    <h1><?php if(isset($options['title_for_rooms_page'])) {echo $options['title_for_rooms_page'];} ?></h1>
     <?php
         if(have_posts()) {
             while(have_posts()) { the_post(); ?>

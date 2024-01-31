@@ -79,11 +79,12 @@ class CheBooking
 		add_settings_section('booking_settings_section', esc_html__('Settings', 'chebooking'), [$this, 'settings_section_html'], 'chebooking');
 
 		add_settings_field('posts_per_page', esc_html__('Posts per page', 'chebooking'), [$this, 'posts_per_page_html'], 'chebooking', 'booking_settings_section');
+		add_settings_field('title_for_rooms_page', esc_html__('Archive page title', 'chebooking'), [$this, 'title_for_rooms_page_html'], 'chebooking', 'booking_settings_section');
 	}
 
 	public function settings_section_html()
 	{
-		echo esc_html__('Hello world', 'chebooking');
+		echo esc_html__('Main settings', 'chebooking');
 	}
 
 	public function posts_per_page_html()
@@ -93,6 +94,15 @@ class CheBooking
 		$value = isset($options['posts_per_page']) ? $options['posts_per_page'] : '';
 
 		echo '<input type="text" name="booking_settings_options[posts_per_page]" value="' . $value . '">';
+	}
+	
+	public function title_for_rooms_page_html()
+	{
+		$options = get_option('booking_settings_options');
+
+		$value = isset($options['title_for_rooms_page']) ? $options['title_for_rooms_page'] : '';
+
+		echo '<input type="text" name="booking_settings_options[title_for_rooms_page]" value="' . $value . '">';
 	}
 
 	// frontend
