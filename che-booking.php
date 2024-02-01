@@ -169,6 +169,31 @@ class CheBooking
 		];
 
 		register_taxonomy('location', 'room', $args);
+
+		$labels_type = [
+			'name'              => _x( 'Types', 'taxonomy general name', 'chebooking' ),
+			'singular_name'     => _x( 'Type', 'taxonomy singular name', 'chebooking' ),
+			'search_items'      =>  __( 'Search Types', 'chebooking' ),
+			'all_items'         => __( 'All Types', 'chebooking' ),
+			'parent_item'       => __( 'Parent Type', 'chebooking' ),
+			'parent_item_colon' => __( 'Parent Type:', 'chebooking' ),
+			'edit_item'         => __( 'Edit Type', 'chebooking' ),
+			'update_item'       => __( 'Update Type', 'chebooking' ),
+			'add_new_item'      => __( 'Add New Type', 'chebooking' ),
+			'new_item_name'     => __( 'New Type Name', 'chebooking' ),
+			'menu_name'         => __( 'Type', 'chebooking' ),
+		];
+
+		$args_type = [
+			'hierarchical' => true,
+			'labels' => $labels_type,
+			'show_ui' => true,
+			'show_admin_column' => true,
+			'query_var' => true,
+			'rewrite' => ['slug' => 'room/type'],
+		];
+
+		register_taxonomy('type', 'room', $args_type);
 	}
 }
 
