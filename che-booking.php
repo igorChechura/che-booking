@@ -95,7 +95,7 @@ class CheBooking
 
 		echo '<input type="text" name="booking_settings_options[posts_per_page]" value="' . $value . '">';
 	}
-	
+
 	public function title_for_rooms_page_html()
 	{
 		$options = get_option('booking_settings_options');
@@ -146,17 +146,17 @@ class CheBooking
 		]);
 
 		$labels = [
-			'name'              => _x( 'Locations', 'taxonomy general name', 'chebooking' ),
-			'singular_name'     => _x( 'Location', 'taxonomy singular name', 'chebooking' ),
-			'search_items'      =>  __( 'Search Locations', 'chebooking' ),
-			'all_items'         => __( 'All Locations', 'chebooking' ),
-			'parent_item'       => __( 'Parent Location', 'chebooking' ),
-			'parent_item_colon' => __( 'Parent Location:', 'chebooking' ),
-			'edit_item'         => __( 'Edit Location', 'chebooking' ),
-			'update_item'       => __( 'Update Location', 'chebooking' ),
-			'add_new_item'      => __( 'Add New Location', 'chebooking' ),
-			'new_item_name'     => __( 'New Location Name', 'chebooking' ),
-			'menu_name'         => __( 'Location', 'chebooking' ),
+			'name'              => _x('Locations', 'taxonomy general name', 'chebooking'),
+			'singular_name'     => _x('Location', 'taxonomy singular name', 'chebooking'),
+			'search_items'      =>  __('Search Locations', 'chebooking'),
+			'all_items'         => __('All Locations', 'chebooking'),
+			'parent_item'       => __('Parent Location', 'chebooking'),
+			'parent_item_colon' => __('Parent Location:', 'chebooking'),
+			'edit_item'         => __('Edit Location', 'chebooking'),
+			'update_item'       => __('Update Location', 'chebooking'),
+			'add_new_item'      => __('Add New Location', 'chebooking'),
+			'new_item_name'     => __('New Location Name', 'chebooking'),
+			'menu_name'         => __('Location', 'chebooking'),
 		];
 
 		$args = [
@@ -171,17 +171,17 @@ class CheBooking
 		register_taxonomy('location', 'room', $args);
 
 		$labels_type = [
-			'name'              => _x( 'Types', 'taxonomy general name', 'chebooking' ),
-			'singular_name'     => _x( 'Type', 'taxonomy singular name', 'chebooking' ),
-			'search_items'      =>  __( 'Search Types', 'chebooking' ),
-			'all_items'         => __( 'All Types', 'chebooking' ),
-			'parent_item'       => __( 'Parent Type', 'chebooking' ),
-			'parent_item_colon' => __( 'Parent Type:', 'chebooking' ),
-			'edit_item'         => __( 'Edit Type', 'chebooking' ),
-			'update_item'       => __( 'Update Type', 'chebooking' ),
-			'add_new_item'      => __( 'Add New Type', 'chebooking' ),
-			'new_item_name'     => __( 'New Type Name', 'chebooking' ),
-			'menu_name'         => __( 'Type', 'chebooking' ),
+			'name'              => _x('Types', 'taxonomy general name', 'chebooking'),
+			'singular_name'     => _x('Type', 'taxonomy singular name', 'chebooking'),
+			'search_items'      =>  __('Search Types', 'chebooking'),
+			'all_items'         => __('All Types', 'chebooking'),
+			'parent_item'       => __('Parent Type', 'chebooking'),
+			'parent_item_colon' => __('Parent Type:', 'chebooking'),
+			'edit_item'         => __('Edit Type', 'chebooking'),
+			'update_item'       => __('Update Type', 'chebooking'),
+			'add_new_item'      => __('Add New Type', 'chebooking'),
+			'new_item_name'     => __('New Type Name', 'chebooking'),
+			'menu_name'         => __('Type', 'chebooking'),
 		];
 
 		$args_type = [
@@ -194,6 +194,25 @@ class CheBooking
 		];
 
 		register_taxonomy('type', 'room', $args_type);
+	}
+
+	public function get_terms_hierarhical($tax_name)
+	{
+		$taxonomy_terms = get_terms($tax_name, ['hide_empty => false', 'parent' => 0]);
+
+		if (!empty($taxonomy_terms)) {
+			foreach ($taxonomy_terms as $term) {
+				echo '<option value="' . $term->term_id . '">' . $term->name . '</option>';
+
+				$child_terms = get_terms($tax_name, ['hide_empty => false', 'parent' => $term->term_id]);
+
+				if (!empty($child_terms)) {
+					foreach($child_terms as $child){
+						echo '<option value="' . $child->term_id . '"> - ' . $child->name . '</option>';
+					}
+				}
+			}
+		}
 	}
 }
 
