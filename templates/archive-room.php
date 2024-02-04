@@ -14,7 +14,7 @@ $instance = new CheBooking();
         <div class="filter">
             <form method="POST" action="<?php echo get_post_type_archive_link('room'); ?>">
 
-                <select name="location">
+                <select name="location_option">
                     <option value=""><?php esc_html_e('Select location', 'chebooking'); ?></option>
 
                     <?php
@@ -22,7 +22,7 @@ $instance = new CheBooking();
                     ?>
                 </select>
 
-                <select name="type">
+                <select name="type_option">
                     <option value=""><?php esc_html_e('Select type', 'chebooking'); ?></option>
 
                     <?php
@@ -36,44 +36,132 @@ $instance = new CheBooking();
         </div>
 
         <?php
-        if (have_posts()) {
-            while (have_posts()) {
-                the_post(); ?>
+        $posts_per_page = -1;
 
-                <article id="post=<?php the_ID(); ?>" <?php post_class(); ?>>
-                    <?php
-                    if (get_the_post_thumbnail(get_the_ID(), 'large')) {
-                        echo '<div class="image">' . get_the_post_thumbnail(get_the_ID(), 'large') . '</div>';
-                    }
-                    ?>
-                    <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+        if ($options['posts_per_page']) {
+            $posts_per_page = $options['posts_per_page'];
+        }
 
-                    <div class="description">
-                        <?php the_excerpt(); ?>
-                    </div>
+        $args = [
+            'post_type' => 'room',
+            'posts_per_page' => -1,
+            'tax_query' => array('relation' => 'AND'),
+        ];
 
-                    <?php
-                    $locations = get_the_terms(get_the_ID(), 'location');
-                    if (!empty($locations)) {
-                        foreach ($locations as $location) {
-                            echo '<div class="location">' . esc_html__('Location', 'chebooking') . $location->name . '</div>';
+        if(isset($_POST['location_option']) && $_POST['location_option'] != '') {
+            array_push($args['tax_query'], [
+                'taxonomy' => 'location',
+                'terms' => $_POST['location_option'],
+            ]);
+        }
+
+        if(isset($_POST['type_option']) && $_POST['type_option'] != '') {
+            array_push($args['tax_query'], [
+                'taxonomy' => 'type',
+                'terms' => $_POST['type_option'],
+            ]);
+        }
+
+        if (!empty($_POST['submit'])) {
+            $search_listing = new WP_Query($args);
+
+            if ($search_listing->have_posts()) {
+                while ($search_listing->have_posts()) {
+                    $search_listing->the_post(); ?>
+
+                    <article id="post=<?php the_ID(); ?>" <?php post_class(); ?>>
+                        <?php
+                        if (get_the_post_thumbnail(get_the_ID(), 'large')) {
+                            echo '<div class="image">' . get_the_post_thumbnail(get_the_ID(), 'large') . '</div>';
                         }
-                    }
+                        ?>
+                        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
-                    $types = get_the_terms(get_the_ID(), 'type');
-                    if (!empty($types)) {
-                        foreach ($types as $type) {
-                            echo '<div class="type">' . esc_html__('Type', 'chebooking') . $type->name . '</div>';
+                        <div class="description">
+                            <?php the_excerpt(); ?>
+                        </div>
+
+                        <?php
+                        $locations = get_the_terms(get_the_ID(), 'location');
+                        if (!empty($locations)) {
+                            foreach ($locations as $location) {
+                                echo '<div class="location">' . esc_html__('Location: ', 'chebooking') . $location->name . '</div>';
+                            }
                         }
-                    }
-                    ?>
-                </article>
+
+                        $types = get_the_terms(get_the_ID(), 'type');
+                        if (!empty($types)) {
+                            foreach ($types as $type) {
+                                echo '<div class="type">' . esc_html__('Type: ', 'chebooking') . $type->name . '</div>';
+                            }
+                        }
+                        ?>
+                    </article>
+                <?php }
+
+                // echo paginate_links();
+            } else {
+                echo esc_html__('No posts', 'chebooking');
+            }
+        } else {
+            $paged = 1;
+
+            if (get_query_var('paged')) {
+                $paged = get_query_var('paged');
+            }
+            if (get_query_var('page')) {
+                $paged = get_query_var('page');
+            }
+
+            $default_listing = [
+                'post_type' => 'room',
+                'posts_per_page' => esc_attr($posts_per_page),
+                'paged' => $paged
+            ];
+
+            $rooms_listing = new WP_Query($default_listing);
+
+            if ($rooms_listing->have_posts()) {
+                while ($rooms_listing->have_posts()) {
+                    $rooms_listing->the_post(); ?>
+
+                    <article id="post=<?php the_ID(); ?>" <?php post_class(); ?>>
+                        <?php
+                        if (get_the_post_thumbnail(get_the_ID(), 'large')) {
+                            echo '<div class="image">' . get_the_post_thumbnail(get_the_ID(), 'large') . '</div>';
+                        }
+                        ?>
+                        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+
+                        <div class="description">
+                            <?php the_excerpt(); ?>
+                        </div>
+
+                        <?php
+                        $locations = get_the_terms(get_the_ID(), 'location');
+                        if (!empty($locations)) {
+                            foreach ($locations as $location) {
+                                echo '<div class="location">' . esc_html__('Location: ', 'chebooking') . $location->name . '</div>';
+                            }
+                        }
+
+                        $types = get_the_terms(get_the_ID(), 'type');
+                        if (!empty($types)) {
+                            foreach ($types as $type) {
+                                echo '<div class="type">' . esc_html__('Type: ', 'chebooking') . $type->name . '</div>';
+                            }
+                        }
+                        ?>
+                    </article>
         <?php }
 
-            echo paginate_links();
-        } else {
-            echo esc_html__('No posts', 'chebooking');
+                // echo paginate_links();
+            } else {
+                echo esc_html__('No posts', 'chebooking');
+            }
         }
+
+
         ?>
     </div>
 </div>
