@@ -196,13 +196,19 @@ class CheBooking
 		register_taxonomy('type', 'room', $args_type);
 	}
 
-	public function get_terms_hierarhical($tax_name)
+	public function get_terms_hierarhical($tax_name, $current_term)
 	{
 		$taxonomy_terms = get_terms($tax_name, ['hide_empty => false', 'parent' => 0]);
 
 		if (!empty($taxonomy_terms)) {
 			foreach ($taxonomy_terms as $term) {
-				echo '<option value="' . $term->term_id . '">' . $term->name . '</option>';
+				if($current_term == $term->term_id) {
+					echo '<option value="' . $term->term_id . '" selected>' . $term->name . '</option>';
+				} else {
+					echo '<option value="' . $term->term_id . '">' . $term->name . '</option>';
+				}
+
+				
 
 				$child_terms = get_terms($tax_name, ['hide_empty => false', 'parent' => $term->term_id]);
 

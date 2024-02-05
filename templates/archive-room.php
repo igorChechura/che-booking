@@ -18,7 +18,7 @@ $instance = new CheBooking();
                     <option value=""><?php esc_html_e('Select location', 'chebooking'); ?></option>
 
                     <?php
-                    $instance->get_terms_hierarhical('location');
+                    $instance->get_terms_hierarhical('location', $_POST['location_option']);
                     ?>
                 </select>
 
@@ -26,7 +26,7 @@ $instance = new CheBooking();
                     <option value=""><?php esc_html_e('Select type', 'chebooking'); ?></option>
 
                     <?php
-                    $instance->get_terms_hierarhical('type');
+                    $instance->get_terms_hierarhical('type', $_POST['type_option']);
                     ?>
                 </select>
 
