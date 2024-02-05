@@ -48,14 +48,14 @@ $instance = new CheBooking();
             'tax_query' => array('relation' => 'AND'),
         ];
 
-        if(isset($_POST['location_option']) && $_POST['location_option'] != '') {
+        if (isset($_POST['location_option']) && $_POST['location_option'] != '') {
             array_push($args['tax_query'], [
                 'taxonomy' => 'location',
                 'terms' => $_POST['location_option'],
             ]);
         }
 
-        if(isset($_POST['type_option']) && $_POST['type_option'] != '') {
+        if (isset($_POST['type_option']) && $_POST['type_option'] != '') {
             array_push($args['tax_query'], [
                 'taxonomy' => 'type',
                 'terms' => $_POST['type_option'],
@@ -155,7 +155,13 @@ $instance = new CheBooking();
                     </article>
         <?php }
 
-                // echo paginate_links();
+                $big = 999999999; // уникальное число
+
+                echo paginate_links(array(
+                    'base'    => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                    'current' => max(1, get_query_var('paged')),
+                    'total'   => $rooms_listing->max_num_pages
+                ));
             } else {
                 echo esc_html__('No posts', 'chebooking');
             }
