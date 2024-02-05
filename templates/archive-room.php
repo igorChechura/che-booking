@@ -44,7 +44,7 @@ $instance = new CheBooking();
 
         $args = [
             'post_type' => 'room',
-            'posts_per_page' => -1,
+            'posts_per_page' => esc_attr($posts_per_page),
             'tax_query' => array('relation' => 'AND'),
         ];
 
