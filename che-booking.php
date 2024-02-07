@@ -9,6 +9,15 @@ if (!function_exists('add_action')) {
 	exit;
 }
 
+define('CHE_BOOKING_PLUGIN_DIR', plugin_dir_path(__FILE__));
+
+// Load templates
+if (!class_exists('Gamajo_Template_Loader')) {
+	require CHE_BOOKING_PLUGIN_DIR . 'includes/class-gamajo-template-loader.php';
+}
+
+require CHE_BOOKING_PLUGIN_DIR . 'class-che-booking-template-loader.php';
+
 class CheBooking
 {
 	public function register()
@@ -202,18 +211,18 @@ class CheBooking
 
 		if (!empty($taxonomy_terms)) {
 			foreach ($taxonomy_terms as $term) {
-				if($current_term == $term->term_id) {
+				if ($current_term == $term->term_id) {
 					echo '<option value="' . $term->term_id . '" selected>' . $term->name . '</option>';
 				} else {
 					echo '<option value="' . $term->term_id . '">' . $term->name . '</option>';
 				}
 
-				
+
 
 				$child_terms = get_terms($tax_name, ['hide_empty => false', 'parent' => $term->term_id]);
 
 				if (!empty($child_terms)) {
-					foreach($child_terms as $child){
+					foreach ($child_terms as $child) {
 						echo '<option value="' . $child->term_id . '"> - ' . $child->name . '</option>';
 					}
 				}
