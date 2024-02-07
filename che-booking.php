@@ -16,7 +16,7 @@ if (!class_exists('Gamajo_Template_Loader')) {
 	require CHE_BOOKING_PLUGIN_DIR . 'includes/class-gamajo-template-loader.php';
 }
 
-require CHE_BOOKING_PLUGIN_DIR . 'class-che-booking-template-loader.php';
+require CHE_BOOKING_PLUGIN_DIR . 'includes/class-che-booking-template-loader.php';
 
 class CheBooking
 {

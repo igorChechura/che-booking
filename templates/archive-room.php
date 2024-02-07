@@ -2,6 +2,7 @@
 get_header();
 $options = get_option('booking_settings_options');
 $instance = new CheBooking();
+$templates = new Che_Booking_Template_Loader();
 ?>
 
 <div class="wrapper">
@@ -67,39 +68,10 @@ $instance = new CheBooking();
 
             if ($search_listing->have_posts()) {
                 while ($search_listing->have_posts()) {
-                    $search_listing->the_post(); ?>
+                    $search_listing->the_post();
 
-                    <article id="post=<?php the_ID(); ?>" <?php post_class(); ?>>
-                        <?php
-                        if (get_the_post_thumbnail(get_the_ID(), 'large')) {
-                            echo '<div class="image">' . get_the_post_thumbnail(get_the_ID(), 'large') . '</div>';
-                        }
-                        ?>
-                        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-
-                        <div class="description">
-                            <?php the_excerpt(); ?>
-                        </div>
-
-                        <?php
-                        $locations = get_the_terms(get_the_ID(), 'location');
-                        if (!empty($locations)) {
-                            foreach ($locations as $location) {
-                                echo '<div class="location">' . esc_html__('Location: ', 'chebooking') . $location->name . '</div>';
-                            }
-                        }
-
-                        $types = get_the_terms(get_the_ID(), 'type');
-                        if (!empty($types)) {
-                            foreach ($types as $type) {
-                                echo '<div class="type">' . esc_html__('Type: ', 'chebooking') . $type->name . '</div>';
-                            }
-                        }
-                        ?>
-                    </article>
-                <?php }
-
-                // echo paginate_links();
+                    $templates->get_template_part('content', 'room');
+                }
             } else {
                 echo esc_html__('No posts', 'chebooking');
             }
@@ -123,37 +95,10 @@ $instance = new CheBooking();
 
             if ($rooms_listing->have_posts()) {
                 while ($rooms_listing->have_posts()) {
-                    $rooms_listing->the_post(); ?>
+                    $rooms_listing->the_post();
 
-                    <article id="post=<?php the_ID(); ?>" <?php post_class(); ?>>
-                        <?php
-                        if (get_the_post_thumbnail(get_the_ID(), 'large')) {
-                            echo '<div class="image">' . get_the_post_thumbnail(get_the_ID(), 'large') . '</div>';
-                        }
-                        ?>
-                        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-
-                        <div class="description">
-                            <?php the_excerpt(); ?>
-                        </div>
-
-                        <?php
-                        $locations = get_the_terms(get_the_ID(), 'location');
-                        if (!empty($locations)) {
-                            foreach ($locations as $location) {
-                                echo '<div class="location">' . esc_html__('Location: ', 'chebooking') . $location->name . '</div>';
-                            }
-                        }
-
-                        $types = get_the_terms(get_the_ID(), 'type');
-                        if (!empty($types)) {
-                            foreach ($types as $type) {
-                                echo '<div class="type">' . esc_html__('Type: ', 'chebooking') . $type->name . '</div>';
-                            }
-                        }
-                        ?>
-                    </article>
-        <?php }
+                    $templates->get_template_part('content', 'room');
+                }
 
                 $big = 999999999; // уникальное число
 
