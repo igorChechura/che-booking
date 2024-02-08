@@ -61,7 +61,16 @@ class CheBooking
 
 	public function meta_box_html($post)
 	{
-		
+		echo '
+			<table>
+				<tbody>
+					<tr>
+						<th><laberl for="chebooking_price">' . esc_html__('Room Price', 'chebooking') . '</laberl></th>
+						<td><input type="text" id="chebooking_price" name="chebooking_price" value=""></td>
+					</tr>
+				</tbody>
+			</table>
+		';
 	}
 
 	// activation
