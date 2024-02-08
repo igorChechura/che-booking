@@ -42,6 +42,26 @@ class CheBooking
 
 		// init settings
 		add_action('admin_init', [$this, 'settings_init']);
+
+		add_action('admin_menu', [$this, 'add_meta_box_for_room']);
+	}
+
+	// metabox
+	public function add_meta_box_for_room()
+	{
+		add_meta_box(
+			'che_booking_rooms',
+			'Room Settings',
+			[$this, 'meta_box_html'],
+			'room',
+			'normal',
+			'default'
+		);
+	}
+
+	public function meta_box_html($post)
+	{
+		
 	}
 
 	// activation
