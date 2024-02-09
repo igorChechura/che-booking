@@ -44,6 +44,8 @@ class CheBooking
 		add_action('admin_init', [$this, 'settings_init']);
 
 		add_action('admin_menu', [$this, 'add_meta_box_for_room']);
+
+		add_action('save_post', [$this, 'save_metadata'], 10, 2);
 	}
 
 	// metabox
@@ -75,6 +77,34 @@ class CheBooking
 				</tbody>
 			</table>
 		';
+	}
+
+	public function save_metadata($post_id, $post)
+	{
+		if (!isset($_POST['_chebooking']) || !wp_verify_nonce($_POST['_chebooking'], 'chebookingnoncefields')) {
+			return $post_id;
+		}
+
+		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+			return $post_id;
+		}
+
+		if ($post->post_type != 'room') {
+			return $post_id;
+		}
+
+		$post_type = get_post_type_object($post->post_type);
+		if (!current_user_can($post_type->cap->edit_post, $post_id)) {
+			return $post_id;
+		}
+
+		if (is_null($_POST['chebooking_price'])) {
+			delete_post_meta($post_id, 'chebooking_price');
+		} else {
+			update_post_meta($post_id, 'chebooking_price', sanitize_text_field($_POST['chebooking_price']));
+		}
+
+		return $post_id;
 	}
 
 	// activation
