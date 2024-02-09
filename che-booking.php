@@ -61,12 +61,14 @@ class CheBooking
 
 	public function meta_box_html($post)
 	{
+		$price = get_post_meta($post->ID, 'chebooking_price');
+
 		echo '
-			<table>
+			<table class="form-table">
 				<tbody>
 					<tr>
 						<th><laberl for="chebooking_price">' . esc_html__('Room Price', 'chebooking') . '</laberl></th>
-						<td><input type="text" id="chebooking_price" name="chebooking_price" value=""></td>
+						<td><input type="text" id="chebooking_price" name="chebooking_price" value="' . esc_attr($price) . '"></td>
 					</tr>
 				</tbody>
 			</table>
