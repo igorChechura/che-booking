@@ -61,7 +61,9 @@ class CheBooking
 
 	public function meta_box_html($post)
 	{
-		$price = get_post_meta($post->ID, 'chebooking_price');
+		$price = get_post_meta($post->ID, 'chebooking_price', true);
+
+		wp_nonce_field('chebookingnoncefields', '_chebooking');
 
 		echo '
 			<table class="form-table">
