@@ -64,6 +64,7 @@ class CheBooking
 	public function meta_box_html($post)
 	{
 		$price = get_post_meta($post->ID, 'chebooking_price', true);
+		$size = get_post_meta($post->ID, 'chebooking_size', true);
 
 		wp_nonce_field('chebookingnoncefields', '_chebooking');
 
@@ -73,6 +74,10 @@ class CheBooking
 					<tr>
 						<th><laberl for="chebooking_price">' . esc_html__('Room Price', 'chebooking') . '</laberl></th>
 						<td><input type="text" id="chebooking_price" name="chebooking_price" value="' . esc_attr($price) . '"></td>
+					</tr>
+					<tr>
+						<th><laberl for="chebooking_size">' . esc_html__('Room Size', 'chebooking') . '</laberl></th>
+						<td><input type="text" id="chebooking_size" name="chebooking_size" value="' . esc_attr($size) . '"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -102,6 +107,12 @@ class CheBooking
 			delete_post_meta($post_id, 'chebooking_price');
 		} else {
 			update_post_meta($post_id, 'chebooking_price', sanitize_text_field($_POST['chebooking_price']));
+		}
+
+		if (is_null($_POST['chebooking_size'])) {
+			delete_post_meta($post_id, 'chebooking_size');
+		} else {
+			update_post_meta($post_id, 'chebooking_size', sanitize_text_field($_POST['chebooking_size']));
 		}
 
 		return $post_id;
