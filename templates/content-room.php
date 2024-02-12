@@ -10,6 +10,10 @@
         <?php the_excerpt(); ?>
     </div>
 
+    <div class="metabox">
+        <?php echo esc_html__('Room Price: ', 'chebooking') . get_post_meta(get_the_ID(), 'chebooking_price', true); ?>
+    </div>
+
     <?php
     $locations = get_the_terms(get_the_ID(), 'location');
     if (!empty($locations)) {
