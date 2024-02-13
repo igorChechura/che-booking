@@ -31,6 +31,9 @@ $templates = new Che_Booking_Template_Loader();
                     ?>
                 </select>
 
+                <input type="text" name="price_down" value="<?php if(isset($_POST['price_down'])) {echo $_POST['price_down'];} ?>">
+                <input type="text" name="price_up" value="<?php if(isset($_POST['price_up'])) {echo $_POST['price_up'];} ?>">
+
                 <input type="submit" name="submit" value="<?php esc_html_e('Filter', 'chebooking'); ?>">
 
             </form>
