@@ -50,7 +50,17 @@ $templates = new Che_Booking_Template_Loader();
             'post_type' => 'room',
             'posts_per_page' => esc_attr($posts_per_page),
             'tax_query' => array('relation' => 'AND'),
+            'meta_query' => array('relation' => 'AND')
         ];
+
+        if(isset($_POST['price_down']) && isset($_POST['price_up'])) {
+            array_push($args['meta_query'], [
+                'key' => 'chebooking_price',
+                'value' => [$_POST['price_down'], $_POST['price_up']],
+                'type' => 'numeric',
+                'compare' => 'BETWEEN'
+            ]);
+        }
 
         if (isset($_POST['location_option']) && $_POST['location_option'] != '') {
             array_push($args['tax_query'], [
