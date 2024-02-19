@@ -12,6 +12,7 @@
 
     <div class="metabox">
         <?php echo esc_html__('Room Price: ', 'chebooking') . get_post_meta(get_the_ID(), 'chebooking_price', true); ?>
+        <?php echo esc_html__('Room Beds: ', 'chebooking') . get_post_meta(get_the_ID(), 'chebooking_beds_count', true); ?>
     </div>
 
     <?php

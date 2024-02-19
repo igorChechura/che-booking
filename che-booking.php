@@ -20,7 +20,7 @@ require CHE_BOOKING_PLUGIN_DIR . 'includes/class-che-booking-template-loader.php
 
 require_once CHE_BOOKING_PLUGIN_DIR . 'includes/meta-box-class/class-che-booking-meta-boxes.php';
 if (is_admin()) {
-	$prefix = 'chebooking__';
+	$prefix = 'chebooking_';
 	/* 
    * configure your meta box
    */
