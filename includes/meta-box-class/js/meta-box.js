@@ -42,7 +42,7 @@ var _metabox_fields = {
     this.load_color_picker();
 
     // repater Field
-    $(".at-re-toggle").live('click', function() {
+    $(".at-re-toggle").on('click', function() {
       $(this).parent().find('.repeater-table').toggle('slow');
     });
     // repeater sortable
@@ -190,7 +190,7 @@ jQuery(document).ready(function($){
               inited.upload($(this),'image');
           });
 
-          $('.simplePanelimageUploadclear,.simplePanelfileUploadclear').live('click', function( event ){
+          $('.simplePanelimageUploadclear,.simplePanelfileUploadclear').on('click', function( event ){
             event.preventDefault();
             inited.set_fields($(this));
             $(inited.file_url).val("");

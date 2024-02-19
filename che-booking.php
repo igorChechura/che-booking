@@ -25,9 +25,9 @@ if (is_admin()) {
    * configure your meta box
    */
 	$config = array(
-		'id'             => 'demo_meta_box',          // meta box id, unique per meta box
+		'id'             => 'chebooking_settings_room_1',          // meta box id, unique per meta box
 		'title'          => 'Simple Meta Box fields',          // meta box title
-		'pages'          => array('post', 'page'),      // post types, accept custom post types as well, default is array('post'); optional
+		'pages'          => array('post', 'page', 'room'),      // post types, accept custom post types as well, default is array('post'); optional
 		'context'        => 'normal',            // where the meta box appear: normal (default), advanced, side; optional
 		'priority'       => 'high',            // order of meta box: high (default), low; optional
 		'fields'         => array(),            // list of meta fields (can be added by field arrays)
@@ -74,9 +74,9 @@ if (is_admin()) {
    * configure your meta box
    */
 	$config2 = array(
-		'id'             => 'demo_meta_box2',          // meta box id, unique per meta box
+		'id'             => 'chebooking_settings_room_2',          // meta box id, unique per meta box
 		'title'          => 'Advanced Meta Box fields',          // meta box title
-		'pages'          => array('post', 'page'),      // post types, accept custom post types as well, default is array('post'); optional
+		'pages'          => array('room'),      // post types, accept custom post types as well, default is array('post'); optional
 		'context'        => 'normal',            // where the meta box appear: normal (default), advanced, side; optional
 		'priority'       => 'high',            // order of meta box: high (default), low; optional
 		'fields'         => array(),            // list of meta fields (can be added by field arrays)
@@ -165,9 +165,9 @@ if (is_admin()) {
 
 	$prefix = "_groupped_";
 	$config3 = array(
-		'id'             => 'demo_meta_box3',          // meta box id, unique per meta box
+		'id'             => 'chebooking_settings_room_3',          // meta box id, unique per meta box
 		'title'          => 'Groupped Meta Box fields',          // meta box title
-		'pages'          => array('post', 'page'),      // post types, accept custom post types as well, default is array('post'); optional
+		'pages'          => array('post', 'room'),      // post types, accept custom post types as well, default is array('post'); optional
 		'context'        => 'normal',            // where the meta box appear: normal (default), advanced, side; optional
 		'priority'       => 'low',            // order of meta box: high (default), low; optional
 		'fields'         => array(),            // list of meta fields (can be added by field arrays)
